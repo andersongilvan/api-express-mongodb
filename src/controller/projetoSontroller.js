@@ -1,7 +1,7 @@
 import projeto from "../../models/projeto.js";
 
 class ProjetosController {
-  static async listar(req, res) {
+  static async listar(res) {
     try {
       const projetos = await projeto.find({});
       res.status(200).json(projetos);
@@ -10,15 +10,13 @@ class ProjetosController {
     }
   }
 
-  static async listarPorID(req, res) {
+  static async listarPorID(req, res, next) {
     try {
       const id = req.params.id;
       const projetoEncontrado = await projeto.findById(id);
       res.status(200).json(projetoEncontrado);
     } catch (error) {
-      res
-        .status(404)
-        .json({ message: `Recurso não encontrado ${error.message}` });
+      next(error);
     }
   }
 
@@ -33,25 +31,23 @@ class ProjetosController {
     }
   }
 
-  static async atualizar(req, res) {
+  static async atualizar(req, res, next) {
     try {
       const id = req.params.id;
       const projetAtualizado = await projeto.findByIdAndUpdate(id, req.body);
       res.status(200).json(projetAtualizado);
     } catch (error) {
-      res
-        .status(500)
-        .json({ message: `Falha na atualização ${error.message}` });
+      next(error);
     }
   }
 
-  static async deletarProjeto(req, res) {
+  static async deletarProjeto(req, res, next) {
     try {
       const id = req.params.id;
       await projeto.findByIdAndDelete(id);
       res.status(200).json({ message: "projeto deletado com sucesso" });
     } catch (error) {
-      res.status(500).json({ message: `Falha ao deletar ${error.message}` });
+      next(error)
     }
   }
 }

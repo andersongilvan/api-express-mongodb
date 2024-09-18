@@ -3,10 +3,16 @@ import mongoose from "mongoose";
 const postsSchema = new mongoose.Schema(
   {
     id: { type: mongoose.Schema.Types.ObjectId },
-    titulo: { type: String, required: true },
-    descricao: { type: String, required: true },
-    conteudo: { type: String, required: true },
-    thumb: { type: String, required: true },
+    titulo: { type: String, required: [true, "O campo TITULO é obrigatório"] },
+    descricao: {
+      type: String,
+      required: [true, "O campo DESCRIÇÃO é obrigatória"],
+    },
+    conteudo: {
+      type: String,
+      required: [true, "O campo CONTEÚDO é obrigatória"],
+    },
+    thumb: { type: String, required: [true, "O campo THUMB é obrigatória"] },
   },
   { versionKey: false, timestamps: true }
 );

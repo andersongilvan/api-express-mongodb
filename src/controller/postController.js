@@ -1,32 +1,36 @@
-import post from "../../models/posts.model.js";
+import postModel from "../../models/posts.model.js";
+import PostService from "../service/postService.js";
 
 class PostController {
-  static async create(req, res) {
+  static async create(req, res, next) {
     try {
-      const newPost = await post.create(req.body);
-      res.status(201).json(newPost);
+      const newPost = await PostService.createPost(req.body);
+      return res.status(201).json(newPost);
     } catch (error) {
-      res.status(500).json({ message: `Falha ao cadastrar ${error.message}` });
+      next(error);
     }
   }
-  static async getAll(req, res) {
+
+  static async get(req, res) {
     try {
-      const allPosts = await post.find({});
+      const allPosts = await PostService.getAllPosts();
       res.status(200).json(allPosts);
     } catch (error) {
       res.status(500).json({ message: `Falha na requisição ${error.message}` });
     }
   }
 
-  static async getPostByID(req, res) {
+  static async getPostByID(req, res, next) {
     try {
       const id = req.params.id;
-      const postFind = await post.findById(id);
-      res.status(200).json(postFind);
+      const postFound = await postModel.findById(id);
+      if (postFound !== null) {
+        res.status(200).json(postFound);
+      } else {
+        res.status(404).json({ message: "ID não encontrado" });
+      }
     } catch (error) {
-      res
-        .status(500)
-        .json({ message: `Falha ao buscar recurso ${error.message}` });
+      next(error);
     }
   }
   /*
@@ -43,25 +47,24 @@ class PostController {
   }
     */
 
-  static async update(req, res) {
+  static async update(req, res, next) {
     try {
       const id = req.params.id;
-      await post.findByIdAndUpdate(id, req.body);
+      const postUpdate = await PostService.updatePost(id, req.body);
       res.status(200).json({ message: "Post atualizado com sucesso" });
     } catch (error) {
-      res
-        .status(500)
-        .json({ message: `Falha na atualizacao ${error.message}` });
+      res;
+      next(error);
     }
   }
 
-  static async delete(req, res) {
+  static async delete(req, res, next) {
     try {
       const id = req.params.id;
-      await post.findByIdAndDelete(id);
+      await PostService.deletePost(id);
       res.status(200).json({ message: "Post deletado com sucesso" });
     } catch (error) {
-      res.status(500).json({ message: `Falha ao deletar ${error.message}` });
+      next(error);
     }
   }
 }
