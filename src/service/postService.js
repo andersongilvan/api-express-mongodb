@@ -1,8 +1,10 @@
-import postModel from "../../models/posts.model.js";
+import postModel from "../models/posts.model.js";
+
 
 class PostService {
   static async createPost(postData) {
     try {
+     
       const newPost = await postModel.create(postData);
       return newPost;
     } catch (error) {

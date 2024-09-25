@@ -1,5 +1,11 @@
+import "dotenv/config"
+
 import app from "./src/app.js";
 
 
 
-app.listen(8080, () => {console.log("Servidor Rodando")})
+const PORT = process.env.PORT
+
+app.listen(PORT, () => {
+  console.log("Rodadndo");
+});

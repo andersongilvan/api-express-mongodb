@@ -1,5 +1,5 @@
 import postModel from "../../models/posts.model.js";
-import PostService from "../service/postService.js";
+import PostService from "../../service/postService.js";
 
 class PostController {
   static async create(req, res, next) {
