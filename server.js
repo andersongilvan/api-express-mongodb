@@ -1,11 +1,11 @@
-import "dotenv/config"
+import "dotenv/config";
 
 import app from "./src/app.js";
 
+const PORT = process.env.PORT || 3000;
 
-
-const PORT = process.env.PORT
-
-app.listen(PORT || 3000, () => {
+app.listen(PORT, () => {
   console.log("Rodadndo");
 });
+
+export default app;
