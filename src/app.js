@@ -1,10 +1,11 @@
 import express from "express";
-import conectaNaDb from "../config/db.connection.js";
+
 import routes from "./routes/index.js";
 import cors from "cors";
 import errorHandler from "./middlewares/errorHandler.js";
+import dbConnection from "../config/dbConnection.js";
 
-const conexao = await conectaNaDb();
+const conexao = await dbConnection();
 
 conexao.on("error", (erro) => {
   console.error("Erro de conexão => ", erro);
