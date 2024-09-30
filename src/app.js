@@ -1,5 +1,5 @@
 import express from "express";
-import conectaNaDb from "../config/db.connection.js";
+import conectaNaDb from "./config/db.connection.js";
 import routes from "./routes/index.js";
 import cors from "cors";
 import errorHandler from "./middlewares/errorHandler.js";
