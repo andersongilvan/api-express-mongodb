@@ -17,7 +17,7 @@ conexao.once("open", () => {
 });
 
 const app = express();
-app.use(cors({ origin: 'http://localhost:5173', credentials: true}));
+app.use(cors());
 routes(app);
 
 app.use(errorHandler);
